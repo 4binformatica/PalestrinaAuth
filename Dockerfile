@@ -1,20 +1,11 @@
-# Base image
-FROM node:22
+FROM node:alpine
 
-# Create app directory
 WORKDIR /usr/src/app
 
-# A wildcard is used to ensure both package.json AND package-lock.json are copied
-COPY package*.json ./
+COPY . /usr/src/app
 
-# Install app dependencies
+RUN npm install -g @angular/cli
+
 RUN npm install
 
-# Bundle app source
-COPY . .
-
-# Creates a "dist" folder with the production build
-RUN npm run build
-
-# Start the server using the production build
-CMD [ "node", "dist/main.js" ]
+CMD ["ng", "serve", "--host", "0.0.0.0"]
